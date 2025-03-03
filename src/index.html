@@ -1,13 +1,101 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="./output.css" rel="stylesheet">
-</head>
-<body>
-  <h1 class="text-3xl font-bold underline">
-    Hello world hi
-  </h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./output.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script src="index.html"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+      }
+      .container {
+        background-color: #17182c;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        max-width: 448px;
+        margin: 0 auto;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: white;
+        text-align: center;
+        font-weight: 600;
+        font-size: 30px;
+        margin-bottom: 20px;
+      }
+      .input-container {
+        position: relative;
+        width: 400px;
+        background: linear-gradient(145deg, #0a89be, #17182c);
+        padding: 4px;
+        border-radius: 50px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+      }
+
+      input {
+        width: 100%;
+        padding: 10px 40px 10px 20px; /* Add padding to leave space for the button */
+        border: none;
+        outline: none;
+        background: #17182c;
+        color: white;
+        font-size: 16px;
+        border-radius: 50px;
+        caret-color: #0a89be;
+      }
+
+      input::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      button {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        outline: none;
+        transition: transform 0.3s ease;
+      }
+
+      button i {
+        font-size: 20px;
+        color: #0a89be;
+      }
+
+      button:hover {
+        transform: translateY(-50%) scale(1.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Todo List</h1>
+      <form class="input-container">
+        <input type="text" placeholder="Input a task" />
+        <button onclick="sendMessage()"><i>❤️</i></button>
+      </form>
+    </div>
+    <!--
+   dark-blue #17182C 
+   light-blue #0A89BE
+   -->
+  </body>
 </html>
