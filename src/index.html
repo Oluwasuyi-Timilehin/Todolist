@@ -6,96 +6,40 @@
     <link href="./output.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <script src="index.html"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 10px;
-      }
-      .container {
-        background-color: #17182c;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        max-width: 448px;
-        margin: 0 auto;
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-      h1 {
-        color: white;
-        text-align: center;
-        font-weight: 600;
-        font-size: 30px;
-        margin-bottom: 20px;
-      }
-      .input-container {
-        position: relative;
-        width: 400px;
-        background: linear-gradient(145deg, #0a89be, #17182c);
-        padding: 4px;
-        border-radius: 50px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-      }
-
-      input {
-        width: 100%;
-        padding: 10px 40px 10px 20px; /* Add padding to leave space for the button */
-        border: none;
-        outline: none;
-        background: #17182c;
-        color: white;
-        font-size: 16px;
-        border-radius: 50px;
-        caret-color: #0a89be;
-      }
-
-      input::placeholder {
-        color: rgba(255, 255, 255, 0.6);
-      }
-
-      button {
-        position: absolute;
-        top: 50%;
-        right: 15px;
-        transform: translateY(-50%);
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        outline: none;
-        transition: transform 0.3s ease;
-      }
-
-      button i {
-        font-size: 20px;
-        color: #0a89be;
-      }
-
-      button:hover {
-        transform: translateY(-50%) scale(1.2);
-      }
-    </style>
   </head>
-  <body>
-    <div class="container">
-      <h1>Todo List</h1>
-      <form class="input-container">
-        <input type="text" placeholder="Input a task" />
-        <button onclick="sendMessage()"><i>❤️</i></button>
+  <body class="m-0 p-0 flex justify-center items-center h-screen">
+    <div class="container mx-auto max-w-md bg-[#17182C] rounded px-5 shadow-xl">
+      <h1 class="text-white text-center font-semibold text-3xl py-5">
+        Todo List
+      </h1>
+      <form class="relative w-full max-w-md mx-auto mb-5">
+        <input
+          type="text"
+          id="input"
+          class="border border-[#0A89BE] text-white text-lg rounded-full py-3 pl-5 pr-12 w-full outline-none placeholder:text-gray-400"
+          placeholder="Input a task"
+        />
+        <button
+          id="button"
+          class="absolute top-1/2 right-4 -translate-y-1/2 text-[#0a89be] text-xl transition-transform duration-300 ease-in-out hover:scale-110"
+        >
+          <i class="fa-solid fa-paper-plane text-[20px] text-[#0a89be]"></i>
+        </button>
       </form>
+      <ul id="ul"></ul>
     </div>
-    <!--
-   dark-blue #17182C 
-   light-blue #0A89BE
-   -->
+    <script src="index.js"></script>
   </body>
 </html>
