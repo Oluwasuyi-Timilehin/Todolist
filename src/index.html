@@ -1,91 +1,128 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="./output.css" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("-translate-x-full");
+      }
+    </script>
   </head>
-  <body>
-    <!-- side bar -->
+  <body class="flex">
+   <div class="">
+     <!-- Sidebar -->
     <aside
-      class="w-64 h-screen p-3 shadow-lg bg-gray-100 flex flex-col justify-between"
+      id="sidebar"
+      class="w-52 h-screen p-3 shadow-lg bg-[#FCFAF8] flex flex-col justify-between transform transition-transform -translate-x-full md:translate-x-0 fixed md:relative duration-300 ease-in-out"
     >
-      <div class="md:block">
-        <h2 class="text-xl font-bold text-slate-700 mb-5">Todo-list</h2>
+      <div>
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="text-xl font-bold text-slate-700">Todo-list</h2>
+          <!-- Sidebar Toggle Icon Inside -->
+          <button onclick="toggleSidebar()" class="p-2 text-gray-600 md:hidden">
+            <i class="fa-solid fa-bars text-md"></i>
+          </button>
+        </div>
         <nav class="flex-1">
           <ul class="space-y-3">
             <button
-              class="flex items-center space-x-2 font-medium py-1.5 px-2 rounded-md text-sm"
+              class="flex items-center space-x-2 font-medium py-1.5 px-2 rounded-md text-red-600 cursor-pointer"
             >
-              <i class="fa-solid fa-circle-plus text-red-600 text-2xl"></i>
-              <p class="block text-gray-600">Add Task</p>
+              <i class="fa-solid fa-circle-plus text-md"></i>
+              <p class="block">Add Task</p>
             </button>
             <li
-              class="flex items-center space-x-2 hover:bg-red-200 py-1.5 px-2 rounded-md text-sm"
+              class="flex items-center space-x-2 hover:bg-red-200 py-1.5 px-2 rounded-md text-xs"
             >
-            <i class="fa-solid fa-magnifying-glass text-gray-600 text-xl"></i>
-              <a href="block">Search</a>
+              <i class="fa-solid fa-magnifying-glass text-gray-600 text-md"></i>
+              <a href="#" class="text-gray-600">Search</a>
             </li>
             <li
-              class="flex items-center space-x-2 hover:bg-red-200 py-1.5 px-2 rounded-md text-sm"
+              class="flex items-center space-x-2 hover:bg-red-200 py-1.5 px-2 rounded-md text-xs"
             >
-              <i class="fa-solid fa-inbox text-gray-600 text-xl"></i>
-              <a href="block">All Task</a>
+              <i class="fa-solid fa-inbox text-gray-600 text-md"></i>
+              <a href="#" class="text-gray-600">All Task</a>
             </li>
             <li
-              class="flex items-center space-x-2 hover:bg-red-200 py-1.5 px-2 rounded-md text-sm"
+              class="flex items-center space-x-2 hover:bg-red-200 py-1.5 px-2 rounded-md text-xs"
             >
-              <i class="fa-regular fa-circle-check text-gray-600 text-xl"></i>
-              <a href="block">Completed</a>
+              <i class="fa-regular fa-circle-check text-gray-600 text-md"></i>
+              <a href="#" class="text-gray-600">Completed</a>
             </li>
           </ul>
         </nav>
       </div>
 
-      <!-- Settings Button pushed to the bottom -->
+      <!-- Settings Button -->
       <button
-        class="py-1.5 px-2 rounded-md text-sm flex items-center space-x-2 mt-auto hover:bg-red-200"
+        class="py-1.5 px-2 rounded-md text-sm flex items-center space-x-2 mt-auto cursor-pointer hover:bg-red-200"
       >
-        <i class="fa-solid fa-gear text-gray-600 text-xl"></i>
+        <i class="fa-solid fa-gear text-gray-600 text-md"></i>
         <p class="block">Settings</p>
       </button>
     </aside>
-  </body>
-  <!-- <body class="m-0 p-0 flex justify-center items-center h-screen">
-    <div class="container mx-auto max-w-md bg-[#17182C] rounded px-5 shadow-xl">
-      <h1 class="text-white text-center font-semibold text-3xl py-5">
-        Todo List
-      </h1>
-      <form class="relative w-full max-w-md mx-auto mb-5">
-        <input
-          type="text"
-          id="input"
-          class="border border-[#0A89BE] text-white text-lg rounded-full py-3 pl-5 pr-12 w-full outline-none placeholder:text-gray-400"
-          placeholder="Input a task"
-        />
-        <button
-          id="button"
-          class="absolute top-1/2 right-4 -translate-y-1/2 text-[#0a89be] text-xl transition-transform duration-300 ease-in-out hover:scale-110"
-        >
-          <i class="fa-solid fa-paper-plane text-[20px] text-[#0a89be]"></i>
+   </div>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-3">
+
+      <!-- Header Section -->
+      <div class="flex justify-between items-center mb-6 lg:justify-end">
+        <button onclick="toggleSidebar()" class="p-2 text-gray-600 md:hidden">
+          <i class="fa-solid fa-bars text-md"></i>
         </button>
-      </form>
-      <ul id="ul"></ul>
-    </div>
-    <script src="index.js"></script>
-  </body> -->
+        <div class="flex items-center space-x-4">
+          <i class="fa-solid fa-sliders text-gray-500 text-md"></i>
+          <i class="fa-regular fa-comment text-gray-500 text-md"></i>
+          <i class="fa-solid fa-ellipsis text-gray-500 text-md"></i>
+        </div>
+      </div>
+
+      <!-- Task Overview / Stats -->
+      <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white p-4 shadow rounded-lg flex items-center space-x-3">
+          <i class="fa-solid fa-list-check text-red-500 text-xl"></i>
+          <div>
+            <p class="text-gray-600 text-sm">Total Tasks</p>
+            <p class="text-lg font-bold">24</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 shadow rounded-lg flex items-center space-x-3">
+          <i class="fa-solid fa-clock text-yellow-500 text-2xl"></i>
+          <div>
+            <p class="text-gray-600 text-sm">Pending Tasks</p>
+            <p class="text-lg font-bold">8</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 shadow rounded-lg flex items-center space-x-3">
+          <i class="fa-solid fa-check-circle text-green-500 text-2xl"></i>
+          <div>
+            <p class="text-gray-600 text-sm">Completed</p>
+            <p class="text-lg font-bold">16</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 shadow rounded-lg flex items-center space-x-3">
+          <i class="fa-solid fa-trash text-gray-500 text-2xl"></i>
+          <div>
+            <p class="text-gray-600 text-sm">Deleted</p>
+            <p class="text-lg font-bold">3</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Task Board -->
+      <div id="content" class="mt-6 p-6 bg-white shadow rounded-lg">
+        <h2 class="text-xl font-semibold text-gray-700">Your Tasks</h2>
+        <p class="text-gray-500">
+          Choose a category from the sidebar to view your tasks.
+        </p>
+      </div>
+
+    </main>
+
+  </body>
 </html>
