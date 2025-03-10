@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="./output.css" rel="stylesheet" />
+    <title>Todo-list Dashboard</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
@@ -36,6 +37,7 @@
           <nav class="flex-1">
             <ul class="space-y-1">
               <button
+                onclick="showTaskModal()"
                 class="flex items-center space-x-2 font-medium py-2 px-2 rounded-md text-red-700 cursor-pointer text-sm hover:bg-gray-200 w-full"
               >
                 <i class="fa-solid fa-circle-plus text-xl"></i>
@@ -89,7 +91,60 @@
         </div>
       </div>
 
-      <!-- Task Overview / Stats -->
+      <div class="mt-6 p-6">
+        <div class="flex flex-col space-y-3">
+          <h2 class="font-semibold text-2xl">Inbox</h2>
+          <button
+            onclick="showTaskModal()"
+            class="flex items-center space-x-3 cursor-pointer group"
+          >
+            <i
+              class="fa-solid fa-plus text-red-600 text-xs flex items-center justify-center rounded-full px-1 py-1 transition-all duration-200 group-hover:bg-red-600 group-hover:text-white"
+            ></i>
+            <p
+              class="text-sm text-slate-500 font-light transition-all duration-200 group-hover:text-red-600"
+            >
+              Add task
+            </p>
+          </button>
+        </div>
+      </div>
+
+      <!-- Task Modal -->
+      <div
+        id="taskModal"
+        class="hidden fixed inset-0 bg-opacity-30 flex items-center justify-center"
+      >
+        <div class="bg-white w-[400px] rounded-lg shadow-2xl p-5">
+          <h2 class="text-lg font-semibold text-gray-700 mb-3">Add New Task</h2>
+
+          <input
+            type="text"
+            placeholder="Task Title"
+            class="w-full border rounded-md p-2 mb-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
+          <textarea
+            placeholder="Description"
+            class="w-full border rounded-md p-2 h-20 focus:outline-none focus:ring-2 focus:ring-red-500"
+          ></textarea>
+
+          <div class="flex justify-between items-center mt-4">
+            <button
+              onclick="hideTaskModal()"
+              class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
+            >
+              Cancel
+            </button>
+            <button
+              class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+            >
+              Add Task
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Task Overview / Stats
       <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-white p-4 shadow rounded-lg flex items-center space-x-3">
           <i class="fa-solid fa-list-check text-red-500 text-xl"></i>
@@ -121,13 +176,13 @@
         </div>
       </div>
 
-      <!-- Task Board -->
+      Task Board 
       <div id="content" class="mt-6 p-6 bg-white shadow rounded-lg">
         <h2 class="text-xl font-semibold text-gray-700">Your Tasks</h2>
         <p class="text-gray-500">
           Choose a category from the sidebar to view your tasks.
         </p>
-      </div>
+      </div> -->
     </main>
   </body>
   <script>
@@ -135,5 +190,21 @@
       const sidebar = document.getElementById("sidebar");
       sidebar.classList.toggle("-translate-x-full");
     }
+
+    function showTaskModal() {
+      document.getElementById("taskModal").classList.remove("hidden");
+    }
+
+    function hideTaskModal() {
+      document.getElementById("taskModal").classList.add("hidden");
+    }
+
+    // Close when clicking outside the modal
+    window.onclick = function (event) {
+      const modal = document.getElementById("taskModal");
+      if (event.target === modal) {
+        hideTaskModal();
+      }
+    };
   </script>
 </html>
