@@ -37,7 +37,7 @@
           <nav class="flex-1">
             <ul class="space-y-1">
               <button
-                onclick="showTaskModal()"
+                onclick="handleAddTaskClick()"
                 class="flex items-center space-x-2 font-medium py-2 px-2 rounded-md text-red-700 cursor-pointer text-sm hover:bg-gray-200 w-full"
               >
                 <i class="fa-solid fa-circle-plus text-xl"></i>
@@ -113,75 +113,92 @@
       <!-- Task Modal -->
       <div
         id="taskModal"
-        class="hidden fixed inset-0 bg-opacity-30 flex items-center justify-center"
+        class="hidden fixed inset-0 flex items-center justify-center"
       >
-        <div class="bg-white w-[600px] rounded-lg shadow-2xl p-5 space-y-3">
-          <div class="flex flex-col space-y-0.5">
-            <input
+        <div
+          class="bg-white w-[90%] md:w-[600px] rounded-lg shadow-2xl p-5 space-y-3"
+        >
+          <!-- Task Title Input -->
+          <input
             type="text"
-            placeholder="Task Title"
-            class="w-full placeholder:font-semibold placeholder:text-xl rounded-md focus:outline-none"
+            placeholder="Submit travel form by next Wed p3"
+            class="w-full text-gray-700 text-xl font-semibold placeholder-gray-400 focus:outline-none border-b border-gray-300 pb-2"
           />
+
+          <!-- Task Description Input -->
           <input
             type="text"
             placeholder="Description"
-            class="w-full placeholder:text-sm rounded-md focus:outline-none"
+            class="w-full text-sm text-gray-600 placeholder-gray-400 focus:outline-none border-b border-gray-300 pb-2"
           />
-          </div>
 
-          <div class="flex items-center border-b border-gray-200 py-2.5">
-            <input type="date" placeholder="Due Date" class="border border-gray-200 p-2 rounded-md">
-          </div>
-
-          <div class="flex justify-end items-center">
+          <!-- Task Controls (Date, Priority, Reminders) -->
+          <div class="flex items-center space-x-2 mt-3 overflow-x-auto">
             <button
-              class="bg-red-500 text-white text-sm font-medium px-3 py-1.5 rounded-md hover:bg-red-600"
+              onclick="showDatePicker()"
+              class="border px-4 py-1.5 rounded-md text-gray-600 flex items-center space-x-2 hover:bg-gray-100 cursor-pointer whitespace-nowrap"
+            >
+              <i class="fa-regular fa-calendar"></i> <span>Date</span>
+            </button>
+            <button
+              onclick="showPriorityOptions()"
+              class="border px-4 py-1.5 rounded-md text-gray-600 flex items-center space-x-2 hover:bg-gray-100 cursor-pointer whitespace-nowrap"
+            >
+              <i class="fa-solid fa-flag"></i> <span>Priority</span>
+            </button>
+            <button
+              onclick="showReminderOptions()"
+              class="border px-4 py-1.5 rounded-md text-gray-600 flex items-center space-x-2 hover:bg-gray-100 cursor-pointer whitespace-nowrap"
+            >
+              <i class="fa-regular fa-bell"></i> <span>Reminders</span>
+            </button>
+          </div>
+
+          <!-- Date Picker (Hidden by Default) -->
+          <div id="datePicker" class="hidden mt-3">
+            <input
+              type="date"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
+            />
+          </div>
+
+          <!-- Priority Options (Hidden by Default) -->
+          <div id="priorityOptions" class="hidden mt-3">
+            <select
+              class="appearance: none w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
+            >
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+
+          <!-- Reminder Options (Hidden by Default) -->
+          <div id="reminderOptions" class="hidden mt-3">
+            <input
+              type="time"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
+            />
+          </div>
+
+          <!-- Add Task Button -->
+          <div class="flex justify-end items-center mt-4">
+            <!-- Cancel Button -->
+            <button
+              onclick="hideTaskModal()"
+              class="text-gray-500 px-3 py-1.5 rounded-md hover:bg-gray-200 cursor-pointer"
+            >
+              Cancel
+            </button>
+            <!-- Add Task Button -->
+            <button
+              class="bg-red-500 text-white text-sm font-medium px-4 py-1.5 rounded-md hover:bg-red-600 ml-2 cursor-pointer"
             >
               Add Task
             </button>
           </div>
         </div>
       </div>
-
-      <!-- Task Overview / Stats
-      <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-white p-4 shadow rounded-lg flex items-center space-x-3">
-          <i class="fa-solid fa-list-check text-red-500 text-xl"></i>
-          <div>
-            <p class="text-gray-600 text-sm">Total Tasks</p>
-            <p class="text-lg font-bold">24</p>
-          </div>
-        </div>
-        <div class="bg-white p-4 shadow rounded-lg flex items-center space-x-3">
-          <i class="fa-solid fa-clock text-yellow-500 text-2xl"></i>
-          <div>
-            <p class="text-gray-600 text-sm">Pending Tasks</p>
-            <p class="text-lg font-bold">8</p>
-          </div>
-        </div>
-        <div class="bg-white p-4 shadow rounded-lg flex items-center space-x-3">
-          <i class="fa-solid fa-check-circle text-green-500 text-2xl"></i>
-          <div>
-            <p class="text-gray-600 text-sm">Completed</p>
-            <p class="text-lg font-bold">16</p>
-          </div>
-        </div>
-        <div class="bg-white p-4 shadow rounded-lg flex items-center space-x-3">
-          <i class="fa-solid fa-trash text-gray-500 text-2xl"></i>
-          <div>
-            <p class="text-gray-600 text-sm">Deleted</p>
-            <p class="text-lg font-bold">3</p>
-          </div>
-        </div>
-      </div>
-
-      Task Board 
-      <div id="content" class="mt-6 p-6 bg-white shadow rounded-lg">
-        <h2 class="text-xl font-semibold text-gray-700">Your Tasks</h2>
-        <p class="text-gray-500">
-          Choose a category from the sidebar to view your tasks.
-        </p>
-      </div> -->
     </main>
   </body>
   <script>
@@ -196,6 +213,32 @@
 
     function hideTaskModal() {
       document.getElementById("taskModal").classList.add("hidden");
+    }
+
+    function handleAddTaskClick() {
+      const sidebar = document.getElementById("sidebar");
+      if (window.innerWidth < 768) {
+        sidebar.classList.add("-translate-x-full");
+      }
+      showTaskModal();
+    }
+
+    // Show Date Picker
+    function showDatePicker() {
+      const datePicker = document.getElementById("datePicker");
+      datePicker.classList.toggle("hidden");
+    }
+
+    // Show Priority Options
+    function showPriorityOptions() {
+      const priorityOptions = document.getElementById("priorityOptions");
+      priorityOptions.classList.toggle("hidden");
+    }
+
+    // Show Reminder Options
+    function showReminderOptions() {
+      const reminderOptions = document.getElementById("reminderOptions");
+      reminderOptions.classList.toggle("hidden");
     }
 
     // Close when clicking outside the modal
