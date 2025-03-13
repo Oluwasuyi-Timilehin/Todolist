@@ -201,52 +201,5 @@
       </div>
     </main>
   </body>
-  <script>
-    function toggleSidebar() {
-      const sidebar = document.getElementById("sidebar");
-      sidebar.classList.toggle("-translate-x-full");
-    }
-
-    function showTaskModal() {
-      document.getElementById("taskModal").classList.remove("hidden");
-    }
-
-    function hideTaskModal() {
-      document.getElementById("taskModal").classList.add("hidden");
-    }
-
-    function handleAddTaskClick() {
-      const sidebar = document.getElementById("sidebar");
-      if (window.innerWidth < 768) {
-        sidebar.classList.add("-translate-x-full");
-      }
-      showTaskModal();
-    }
-
-    // Show Date Picker
-    function showDatePicker() {
-      const datePicker = document.getElementById("datePicker");
-      datePicker.classList.toggle("hidden");
-    }
-
-    // Show Priority Options
-    function showPriorityOptions() {
-      const priorityOptions = document.getElementById("priorityOptions");
-      priorityOptions.classList.toggle("hidden");
-    }
-
-    // Show Reminder Options
-    function showReminderOptions() {
-      const reminderOptions = document.getElementById("reminderOptions");
-      reminderOptions.classList.toggle("hidden");
-    }
-
-    // Close when clicking outside the modal
-    window.onclick = function (event) {
-      const modal = document.getElementById("taskModal");
-      if (event.target === modal) {
-        hideTaskModal();
-      }
-    };
-  </script>
+  <script src="index.js"></script>
 </html>
