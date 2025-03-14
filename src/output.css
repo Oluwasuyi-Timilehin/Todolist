@@ -13,6 +13,8 @@
     --color-yellow-500: oklch(0.795 0.184 86.047);
     --color-yellow-700: oklch(0.554 0.135 66.442);
     --color-green-500: oklch(0.723 0.219 149.579);
+    --color-blue-500: oklch(0.623 0.214 259.815);
+    --color-blue-700: oklch(0.488 0.243 264.376);
     --color-slate-500: oklch(0.554 0.046 257.417);
     --color-slate-700: oklch(0.372 0.044 257.287);
     --color-gray-50: oklch(0.985 0.002 247.839);
@@ -283,12 +285,6 @@
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
-  .top-1\/2 {
-    top: calc(1/2 * 100%);
-  }
-  .right-3 {
-    right: calc(var(--spacing) * 3);
-  }
   .left-0 {
     left: calc(var(--spacing) * 0);
   }
@@ -297,6 +293,9 @@
   }
   .isolation-auto {
     isolation: auto;
+  }
+  .z-5 {
+    z-index: 5;
   }
   .z-40 {
     z-index: 40;
@@ -412,17 +411,11 @@
   .mx-2 {
     margin-inline: calc(var(--spacing) * 2);
   }
-  .mx-5 {
-    margin-inline: calc(var(--spacing) * 5);
-  }
   .mx-auto {
     margin-inline: auto;
   }
-  .my-1 {
-    margin-block: calc(var(--spacing) * 1);
-  }
-  .my-2 {
-    margin-block: calc(var(--spacing) * 2);
+  .mt-1 {
+    margin-top: calc(var(--spacing) * 1);
   }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
@@ -550,6 +543,9 @@
   .aspect-square {
     aspect-ratio: 1 / 1;
   }
+  .h-4 {
+    height: calc(var(--spacing) * 4);
+  }
   .h-screen {
     height: 100vh;
   }
@@ -568,6 +564,9 @@
   .w-1\/2 {
     width: calc(1/2 * 100%);
   }
+  .w-4 {
+    width: calc(var(--spacing) * 4);
+  }
   .w-64 {
     width: calc(var(--spacing) * 64);
   }
@@ -576,9 +575,6 @@
   }
   .w-\[90\%\] {
     width: 90%;
-  }
-  .w-\[600px\] {
-    width: 600px;
   }
   .w-full {
     width: 100%;
@@ -695,10 +691,6 @@
   }
   .translate-x-0 {
     --tw-translate-x: calc(var(--spacing) * 0);
-    translate: var(--tw-translate-x) var(--tw-translate-y);
-  }
-  .-translate-y-1\/2 {
-    --tw-translate-y: calc(calc(1/2 * 100%) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
   .translate-3d {
@@ -845,9 +837,6 @@
   }
   .grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-  .grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .grid-cols-none {
     grid-template-columns: none;
@@ -1005,38 +994,14 @@
   .justify-items-stretch {
     justify-items: stretch;
   }
-  .gap-4 {
-    gap: calc(var(--spacing) * 4);
-  }
   .gap-8 {
     gap: calc(var(--spacing) * 8);
-  }
-  .space-y-0 {
-    :where(& > :not(:last-child)) {
-      --tw-space-y-reverse: 0;
-      margin-block-start: calc(calc(var(--spacing) * 0) * var(--tw-space-y-reverse));
-      margin-block-end: calc(calc(var(--spacing) * 0) * calc(1 - var(--tw-space-y-reverse)));
-    }
-  }
-  .space-y-0\.5 {
-    :where(& > :not(:last-child)) {
-      --tw-space-y-reverse: 0;
-      margin-block-start: calc(calc(var(--spacing) * 0.5) * var(--tw-space-y-reverse));
-      margin-block-end: calc(calc(var(--spacing) * 0.5) * calc(1 - var(--tw-space-y-reverse)));
-    }
   }
   .space-y-1 {
     :where(& > :not(:last-child)) {
       --tw-space-y-reverse: 0;
       margin-block-start: calc(calc(var(--spacing) * 1) * var(--tw-space-y-reverse));
       margin-block-end: calc(calc(var(--spacing) * 1) * calc(1 - var(--tw-space-y-reverse)));
-    }
-  }
-  .space-y-2 {
-    :where(& > :not(:last-child)) {
-      --tw-space-y-reverse: 0;
-      margin-block-start: calc(calc(var(--spacing) * 2) * var(--tw-space-y-reverse));
-      margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
   .space-y-3 {
@@ -1294,6 +1259,9 @@
   .border-gray-300 {
     border-color: var(--color-gray-300);
   }
+  .border-gray-400 {
+    border-color: var(--color-gray-400);
+  }
   .bg-\(--my_variable\) {
     background-color: var(--my_variable);
   }
@@ -1315,8 +1283,8 @@
   .bg-gray-50 {
     background-color: var(--color-gray-50);
   }
-  .bg-gray-900 {
-    background-color: var(--color-gray-900);
+  .bg-gray-100 {
+    background-color: var(--color-gray-100);
   }
   .bg-red-500 {
     background-color: var(--color-red-500);
@@ -1544,9 +1512,6 @@
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
   }
-  .py-2\.5 {
-    padding-block: calc(var(--spacing) * 2.5);
-  }
   .py-3 {
     padding-block: calc(var(--spacing) * 3);
   }
@@ -1730,6 +1695,12 @@
   }
   .\[color\:red\]\/50\! {
     color: color-mix(in oklab, red 50%, transparent) !important;
+  }
+  .text-blue-500 {
+    color: var(--color-blue-500);
+  }
+  .text-gray-200 {
+    color: var(--color-gray-200);
   }
   .text-gray-500 {
     color: var(--color-gray-500);
@@ -2259,24 +2230,6 @@
       }
     }
   }
-  .placeholder\:text-sm {
-    &::placeholder {
-      font-size: var(--text-sm);
-      line-height: var(--tw-leading, var(--text-sm--line-height));
-    }
-  }
-  .placeholder\:text-xl {
-    &::placeholder {
-      font-size: var(--text-xl);
-      line-height: var(--tw-leading, var(--text-xl--line-height));
-    }
-  }
-  .placeholder\:font-semibold {
-    &::placeholder {
-      --tw-font-weight: var(--font-weight-semibold);
-      font-weight: var(--font-weight-semibold);
-    }
-  }
   .hover\:bg-gray-100 {
     &:hover {
       @media (hover: hover) {
@@ -2312,6 +2265,13 @@
       }
     }
   }
+  .hover\:text-blue-700 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-blue-700);
+      }
+    }
+  }
   .hover\:text-gray-900 {
     &:hover {
       @media (hover: hover) {
@@ -2319,15 +2279,17 @@
       }
     }
   }
+  .hover\:text-red-700 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-red-700);
+      }
+    }
+  }
   .focus\:ring-2 {
     &:focus {
       --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentColor);
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-    }
-  }
-  .focus\:ring-red-500 {
-    &:focus {
-      --tw-ring-color: var(--color-red-500);
     }
   }
   .focus\:outline-none {
@@ -2370,11 +2332,6 @@
   .md\:grid-cols-3 {
     @media (width >= 48rem) {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-  .md\:grid-cols-4 {
-    @media (width >= 48rem) {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
   .lg\:justify-end {

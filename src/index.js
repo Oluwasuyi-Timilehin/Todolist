@@ -1,16 +1,22 @@
+// index.js
+
+// Function to toggle the sidebar
 function toggleSidebar() {
   const sidebar = document.getElementById("sidebar");
   sidebar.classList.toggle("-translate-x-full");
 }
 
+// Function to show the task modal
 function showTaskModal() {
   document.getElementById("taskModal").classList.remove("hidden");
 }
 
+// Function to hide the task modal
 function hideTaskModal() {
   document.getElementById("taskModal").classList.add("hidden");
 }
 
+// Function to handle the "Add Task" button click
 function handleAddTaskClick() {
   const sidebar = document.getElementById("sidebar");
   if (window.innerWidth < 768) {
@@ -19,85 +25,190 @@ function handleAddTaskClick() {
   showTaskModal();
 }
 
-// Show Date Picker
+// Function to show the date picker
 function showDatePicker() {
   const datePicker = document.getElementById("datePicker");
   datePicker.classList.toggle("hidden");
 }
 
-// Show Priority Options
+// Function to show the priority options
 function showPriorityOptions() {
   const priorityOptions = document.getElementById("priorityOptions");
   priorityOptions.classList.toggle("hidden");
 }
 
-// Show Reminder Options
+// Function to show the reminder options
 function showReminderOptions() {
   const reminderOptions = document.getElementById("reminderOptions");
   reminderOptions.classList.toggle("hidden");
 }
 
-// Close when clicking outside the modal
-window.onclick = function (event) {
-  const modal = document.getElementById("taskModal");
-  if (event.target === modal) {
-    hideTaskModal();
+// Function to add a new task
+function addTask() {
+  const taskTitle = document.getElementById("taskTitle").value.trim();
+  const taskDescription = document
+    .getElementById("taskDescription")
+    .value.trim();
+  const taskDate = document.getElementById("taskDate").value;
+  const taskPriority = document.getElementById("taskPriority").value;
+  const taskReminder = document.getElementById("taskReminder").value;
+
+  if (taskTitle === "") {
+    alert("Please enter a task title.");
+    return;
   }
-};
 
-// document.addEventListener("DOMContentLoaded", () => {
-//   const input = document.getElementById("input");
-//   const button = document.getElementById("button");
-//   const ul = document.getElementById("ul");
+  // Create a new task object
+  const task = {
+    id: Date.now(),
+    title: taskTitle,
+    description: taskDescription,
+    date: taskDate,
+    priority: taskPriority,
+    reminder: taskReminder,
+    completed: false,
+  };
 
-//   button.addEventListener("click", (e) => {
-//     e.preventDefault(); // Prevent form submission
+  // Save the task to local storage
+  saveTask(task);
 
-//     const taskText = input.value.trim();
-//     if (taskText === "") return;
+  // Clear the form
+  document.getElementById("taskTitle").value = "";
+  document.getElementById("taskDescription").value = "";
+  document.getElementById("taskDate").value = "";
+  document.getElementById("taskPriority").value = "low";
+  document.getElementById("taskReminder").value = "";
 
-//     // Create list item
-//     const li = document.createElement("li");
-//     li.className =
-//       "flex justify-between items-center text-white p-3 rounded-md mb-2 shadow-md";
+  // Hide the modal
+  hideTaskModal();
 
-//     // Task text (Editable)
-//     const span = document.createElement("span");
-//     span.textContent = taskText;
-//     span.className = "flex-1 cursor-pointer";
+  // Refresh the task list
+  displayTasks();
+}
 
-//     // Edit button
-//     const editButton = document.createElement("button");
-//     editButton.innerHTML = '<i class="fa-solid fa-pen"></i>';
-//     editButton.className =
-//       "text-white bg-yellow-500 p-2 rounded-md hover:bg-yellow-700 transition duration-200 mx-2";
+// Function to save a task to local storage
+function saveTask(task) {
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  tasks.push(task);
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
-//     // Delete button
-//     const deleteButton = document.createElement("button");
-//     deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
-//     deleteButton.className =
-//       "text-white bg-red-500 p-2 rounded-md hover:bg-red-700 transition duration-200";
+// Function to display tasks
+function displayTasks() {
+  const taskList = document.getElementById("taskList");
+  const completedTaskList = document.getElementById("completedTaskList");
 
-//     // Edit functionality
-//     editButton.addEventListener("click", () => {
-//       const newText = prompt("Edit your task:", span.textContent);
-//       if (newText !== null && newText.trim() !== "") {
-//         span.textContent = newText.trim();
-//       }
-//     });
+  if (taskList) taskList.innerHTML = "";
+  if (completedTaskList) completedTaskList.innerHTML = "";
 
-//     // Delete functionality
-//     deleteButton.addEventListener("click", () => {
-//       li.remove();
-//     });
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-//     // Append elements
-//     li.appendChild(span);
-//     li.appendChild(editButton);
-//     li.appendChild(deleteButton);
-//     ul.appendChild(li);
+  tasks.forEach((task) => {
+    const taskItem = document.createElement("div");
+    taskItem.className =
+      "flex justify-between items-center p-3 border-b border-gray-200";
 
-//     // Clear input
-//     input.value = "";
-//   });
-// });
+    taskItem.innerHTML = `
+  <div class="flex items-center space-x-3 flex-1">
+    <!-- Custom Checkbox -->
+    <input
+      type="checkbox"
+      ${task.completed ? "checked" : ""}
+      onchange="toggleTaskCompletion(${task.id})"
+      class="custom-checkbox"
+    />
+    <!-- Task Title and Description -->
+    <div class="flex-1">
+      <h3 class="font-semibold ${
+        task.completed ? "line-through text-gray-500" : ""
+      }">${task.title}</h3>
+      <p class="text-sm text-gray-600 ${
+        task.completed ? "line-through" : ""
+      }">${task.description}</p>
+      <div class="text-xs text-gray-500 mt-1">
+        <span>${task.date}</span> | <span>${task.priority}</span> | <span>${
+      task.reminder
+    }</span>
+      </div>
+    </div>
+  </div>
+  <!-- Edit and Delete Buttons -->
+  <div class="flex items-center space-x-3">
+    <button onclick="editTask(${task.id})" class="text-gray-500 cursor-pointer">
+      <i class="fa-solid fa-pen"></i>
+    </button>
+    <button onclick="deleteTask(${
+      task.id
+    })" class="text-gray-500 cursor-pointer">
+      <i class="fa-solid fa-trash"></i>
+    </button>
+  </div>
+`;
+
+    if (completedTaskList && task.completed) {
+      completedTaskList.appendChild(taskItem);
+    } else if (taskList && !task.completed) {
+      taskList.appendChild(taskItem);
+    }
+  });
+}
+
+// Function to edit a task
+function editTask(taskId) {
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  const task = tasks.find((t) => t.id === taskId);
+
+  if (task) {
+    // Populate the modal with task details
+    document.getElementById("taskTitle").value = task.title;
+    document.getElementById("taskDescription").value = task.description;
+    document.getElementById("taskDate").value = task.date;
+    document.getElementById("taskPriority").value = task.priority;
+    document.getElementById("taskReminder").value = task.reminder;
+
+    // Show the modal
+    showTaskModal();
+
+    // Update the task on save
+    const saveButton = document.querySelector("#taskModal button.bg-red-500");
+    saveButton.onclick = function () {
+      task.title = document.getElementById("taskTitle").value.trim();
+      task.description = document
+        .getElementById("taskDescription")
+        .value.trim();
+      task.date = document.getElementById("taskDate").value;
+      task.priority = document.getElementById("taskPriority").value;
+      task.reminder = document.getElementById("taskReminder").value;
+
+      // Save the updated task list to local storage
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+
+      // Hide the modal and refresh the task list
+      hideTaskModal();
+      displayTasks();
+    };
+  }
+}
+
+// Function to delete a task
+function deleteTask(taskId) {
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  tasks = tasks.filter((t) => t.id !== taskId); // Remove the task
+  localStorage.setItem("tasks", JSON.stringify(tasks)); // Update local storage
+  displayTasks(); // Refresh the task list
+}
+
+// Function to toggle task completion
+function toggleTaskCompletion(taskId) {
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  const task = tasks.find((t) => t.id === taskId);
+
+  if (task) {
+    task.completed = !task.completed; // Toggle completion status
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    displayTasks(); // Refresh the task list
+  }
+}
+
+// Display tasks on page load
+document.addEventListener("DOMContentLoaded", displayTasks);
