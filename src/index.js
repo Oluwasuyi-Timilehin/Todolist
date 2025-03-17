@@ -49,9 +49,9 @@ function addTask() {
   const taskDescription = document
     .getElementById("taskDescription")
     .value.trim();
-  const taskDate = document.getElementById("taskDate").value;
+  const taskDate = document.getElementById("taskDate").value; // YYYY-MM-DD
+  const taskReminder = document.getElementById("taskReminder").value; // HH:MM
   const taskPriority = document.getElementById("taskPriority").value;
-  const taskReminder = document.getElementById("taskReminder").value;
 
   if (taskTitle === "") {
     alert("Please enter a task title.");
@@ -63,9 +63,9 @@ function addTask() {
     id: Date.now(),
     title: taskTitle,
     description: taskDescription,
-    date: taskDate,
+    date: taskDate, // Date in YYYY-MM-DD format
+    reminder: taskReminder, // Time in HH:MM format
     priority: taskPriority,
-    reminder: taskReminder,
     completed: false,
   };
 
@@ -85,6 +85,38 @@ function addTask() {
   // Refresh the task list
   displayTasks();
 }
+
+// Alarm sound
+const alarmSound = new Audio("./alarm.mp3"); // Path to your alarm sound file
+
+// Function to check for alarms
+function checkAlarms() {
+  const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+  tasks.forEach((task) => {
+    if (!task.completed && task.date && task.reminder) {
+      const taskDateTime = new Date(`${task.date}T${task.reminder}`);
+      const currentDateTime = new Date();
+
+      // Check if the task's date and time match the current date and time
+      if (taskDateTime <= currentDateTime) {
+        playAlarm();
+        task.completed = true; // Mark the task as completed
+        localStorage.setItem("tasks", JSON.stringify(tasks)); // Update local storage
+        displayTasks(); // Refresh the task list
+      }
+    }
+  });
+}
+
+// Function to play the alarm sound
+function playAlarm() {
+  alarmSound.play();
+  alert("Alarm! A task's time is up!"); // Optional: Show an alert
+}
+
+// Check for alarms every second
+setInterval(checkAlarms, 1000);
 
 // Function to save a task to local storage
 function saveTask(task) {
@@ -188,6 +220,10 @@ function editTask(taskId) {
       displayTasks();
     };
   }
+}
+
+function navigateTo(page) {
+  window.location.href = page;
 }
 
 // Function to delete a task

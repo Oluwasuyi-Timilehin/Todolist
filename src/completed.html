@@ -79,18 +79,18 @@
                 <a href="#" class="">Search</a>
               </li>
               <li
+              onclick="navigateTo('index.html')"
                 class="flex items-center space-x-2 py-2 px-2 rounded-md text-sm cursor-pointer hover:bg-gray-200"
               >
-                <i
-                  class="fa-solid fa-inbox text-gray-600 text-xl"
-                ></i>
-                <a href="index.html" class="">All Tasks</a>
+                <i class="fa-solid fa-inbox text-gray-600 text-xl"></i>
+                <span>All Tasks</span>
               </li>
               <li
+                onclick="navigateTo('completed.html');"
                 class="flex items-center space-x-2 py-2 px-2 rounded-md text-sm cursor-pointer hover:bg-gray-200"
               >
                 <i class="fa-regular fa-circle-check text-gray-600 text-xl"></i>
-                <a href="completed.html" class="">Completed</a>
+                <span>Completed</span>
               </li>
             </ul>
           </nav>

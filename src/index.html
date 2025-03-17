@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="./output.css" rel="stylesheet" />
-    <title>Todo-list Dashboard</title>
+    <title>All Tasks</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
@@ -79,17 +79,18 @@
                 <a href="#" class="">Search</a>
               </li>
               <li
+              onclick="navigateTo('index.html')"
                 class="flex items-center space-x-2 py-2 px-2 rounded-md text-sm cursor-pointer hover:bg-gray-200"
               >
                 <i class="fa-solid fa-inbox text-gray-600 text-xl"></i>
-                <a href="index.html" class="">All Task</a>
+                <span>All Tasks</span>
               </li>
               <li
-                onclick="showCompletedTasks()"
+                onclick="navigateTo('completed.html');"
                 class="flex items-center space-x-2 py-2 px-2 rounded-md text-sm cursor-pointer hover:bg-gray-200"
               >
                 <i class="fa-regular fa-circle-check text-gray-600 text-xl"></i>
-                <a href="completed.html" class="">Completed</a>
+                <span>Completed</span>
               </li>
             </ul>
           </nav>
