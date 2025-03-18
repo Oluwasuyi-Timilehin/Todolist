@@ -82,8 +82,8 @@ function addTask() {
   // Hide the modal
   hideTaskModal();
 
-  // Refresh the task list
-  displayTasks();
+  // Redirect to the "All Tasks" page
+  window.location.href = "index.html";
 }
 
 // Alarm sound
