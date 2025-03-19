@@ -58,9 +58,20 @@ function addTask() {
     return;
   }
 
+  // Validate date and time
+  if (taskDate && isNaN(new Date(taskDate).getTime())) {
+    alert("Please enter a valid date.");
+    return;
+  }
+
+  if (taskReminder && !/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(taskReminder)) {
+    alert("Please enter a valid time in HH:MM format.");
+    return;
+  }
+
   // Create a new task object
   const task = {
-    id: Date.now(),
+    id: Date.now() + Math.floor(Math.random() * 1000), // Unique ID
     title: taskTitle,
     description: taskDescription,
     date: taskDate, // Date in YYYY-MM-DD format
@@ -82,12 +93,17 @@ function addTask() {
   // Hide the modal
   hideTaskModal();
 
-  // Redirect to the "All Tasks" page
-  window.location.href = "index.html";
+  // Redirect to the "All Tasks" page if not already there
+  if (!window.location.pathname.includes("index.html")) {
+    window.location.href = "index.html";
+  }
 }
 
 // Alarm sound
 const alarmSound = new Audio("./alarm.mp3"); // Path to your alarm sound file
+alarmSound.onerror = () => {
+  console.error("Failed to load alarm sound.");
+};
 
 // Function to check for alarms
 function checkAlarms() {
@@ -99,11 +115,10 @@ function checkAlarms() {
       const currentDateTime = new Date();
 
       // Check if the task's date and time match the current date and time
-      if (taskDateTime <= currentDateTime) {
+      if (taskDateTime <= currentDateTime && !task.alarmTriggered) {
         playAlarm();
-        task.completed = true; // Mark the task as completed
+        task.alarmTriggered = true; // Mark the alarm as triggered
         localStorage.setItem("tasks", JSON.stringify(tasks)); // Update local storage
-        displayTasks(); // Refresh the task list
       }
     }
   });
@@ -135,47 +150,66 @@ function displayTasks() {
 
   let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
+  // Filter tasks based on the page (completed.html or index.html)
+  const isCompletedPage = window.location.pathname.includes("completed.html");
+  if (isCompletedPage) {
+    tasks = tasks.filter((task) => task.completed);
+  }
+
+  if (tasks.length === 0) {
+    const noTasksMessage = document.createElement("p");
+    noTasksMessage.className = "text-gray-500 text-center";
+    noTasksMessage.textContent = isCompletedPage
+      ? "No completed tasks found."
+      : "No tasks found.";
+    if (taskList) taskList.appendChild(noTasksMessage);
+    if (completedTaskList) completedTaskList.appendChild(noTasksMessage);
+    return;
+  }
+
   tasks.forEach((task) => {
     const taskItem = document.createElement("div");
     taskItem.className =
       "flex justify-between items-center p-3 border-b border-gray-200";
 
     taskItem.innerHTML = `
-  <div class="flex items-center space-x-3 flex-1">
-    <!-- Custom Checkbox -->
-    <input
-      type="checkbox"
-      ${task.completed ? "checked" : ""}
-      onchange="toggleTaskCompletion(${task.id})"
-      class="custom-checkbox"
-    />
-    <!-- Task Title and Description -->
-    <div class="flex-1">
-      <h3 class="font-semibold ${
-        task.completed ? "line-through text-gray-500" : ""
-      }">${task.title}</h3>
-      <p class="text-sm text-gray-600 ${
-        task.completed ? "line-through" : ""
-      }">${task.description}</p>
-      <div class="text-xs text-gray-500 mt-1">
-        <span>${task.date}</span> | <span>${task.priority}</span> | <span>${
+      <div class="flex items-center space-x-3 flex-1">
+        <!-- Custom Checkbox -->
+        <input
+          type="checkbox"
+          ${task.completed ? "checked" : ""}
+          onchange="toggleTaskCompletion(${task.id})"
+          class="custom-checkbox"
+        />
+        <!-- Task Title and Description -->
+        <div class="flex-1">
+          <h3 class="font-semibold ${
+            task.completed ? "line-through text-gray-500" : ""
+          }">${task.title}</h3>
+          <p class="text-sm text-gray-600 ${
+            task.completed ? "line-through" : ""
+          }">${task.description}</p>
+          <div class="text-xs text-gray-500 mt-1">
+            <span>${task.date}</span> | <span>${task.priority}</span> | <span>${
       task.reminder
     }</span>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  <!-- Edit and Delete Buttons -->
-  <div class="flex items-center space-x-3">
-    <button onclick="editTask(${task.id})" class="text-gray-500 cursor-pointer">
-      <i class="fa-solid fa-pen"></i>
-    </button>
-    <button onclick="deleteTask(${
-      task.id
-    })" class="text-gray-500 cursor-pointer">
-      <i class="fa-solid fa-trash"></i>
-    </button>
-  </div>
-`;
+      <!-- Edit and Delete Buttons -->
+      <div class="flex items-center space-x-3">
+        <button onclick="editTask(${
+          task.id
+        })" class="text-gray-500 cursor-pointer">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+        <button onclick="deleteTask(${
+          task.id
+        })" class="text-gray-500 cursor-pointer">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+    `;
 
     if (completedTaskList && task.completed) {
       completedTaskList.appendChild(taskItem);
@@ -201,8 +235,11 @@ function editTask(taskId) {
     // Show the modal
     showTaskModal();
 
-    // Update the task on save
+    // Remove the existing onclick handler
     const saveButton = document.querySelector("#taskModal button.bg-red-500");
+    saveButton.onclick = null;
+
+    // Update the task on save
     saveButton.onclick = function () {
       task.title = document.getElementById("taskTitle").value.trim();
       task.description = document
@@ -222,6 +259,9 @@ function editTask(taskId) {
   }
 }
 
+
+
+// Function to navigate to a different page
 function navigateTo(page) {
   window.location.href = page;
 }

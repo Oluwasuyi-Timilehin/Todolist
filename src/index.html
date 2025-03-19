@@ -71,6 +71,8 @@
                 <p class="block text-red-800">Add Task</p>
               </button>
               <li
+              id="searchLi" 
+                onclick="toggleSearchInput()"
                 class="flex items-center space-x-2 py-2 px-2 rounded-md text-sm cursor-pointer hover:bg-gray-200"
               >
                 <i
@@ -79,7 +81,7 @@
                 <a href="#" class="">Search</a>
               </li>
               <li
-              onclick="navigateTo('index.html')"
+                onclick="navigateTo('index.html')"
                 class="flex items-center space-x-2 py-2 px-2 rounded-md text-sm cursor-pointer hover:bg-gray-200"
               >
                 <i class="fa-solid fa-inbox text-gray-600 text-xl"></i>
